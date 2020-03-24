@@ -35,3 +35,8 @@
     
 
 }
+
+@mixin alert-style($color,$background-color){
+    color: $color;
+    bachground-color: $background-color;
+}

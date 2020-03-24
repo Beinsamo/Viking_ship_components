@@ -1,21 +1,16 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Button, {ButtonSize,ButtonType} from './components/Button/button';
-
+import Alert, {AlertType} from './components/Alert/alert';
 
 function App() {
+  let [open,openAlert]=useState(false)
+
   return (
     <div className="App">
       <header className="App-header">
-       <Button size={ButtonSize.Large} btnType={ButtonType.Primary}>nihao</Button>
+       <Button size={ButtonSize.Large} btnType={ButtonType.Primary} onClick={()=>{openAlert(true)}}>nihao</Button>
         
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+       <Alert idName='1' altType={AlertType.Success} title={'alertsucess'} content='it sucesses' />
       </header>
     </div>
   );

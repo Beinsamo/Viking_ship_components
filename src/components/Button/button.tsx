@@ -41,8 +41,9 @@ const Button : React.FC <ButtonProps>=(props)=>{
    const classes=classNames('btn',{
        [`btn-${btnType}`]: btnType,
        [`btn-${size}`]: size,
-       'disabled' : (btnType === ButtonType.Link) && disabled
-   }
+       'disabled' : (btnType === ButtonType.Link) && disabled,
+       [`${classname}`]: classname
+    }
    )
 
    if (btnType===ButtonType.Link){

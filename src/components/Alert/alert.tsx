@@ -32,11 +32,11 @@ const Alert : React.FC<BaseAlertProps>=(props)=>{
        [`alert-${altType}`]:altType,
        [`${idName}`]: true
    })
-
+   
    function close(){
       document.getElementsByClassName(`${idName}`)[0].setAttribute('style',`display : none`);
    }
-
+   
 
 return(
       <div className={classes}>

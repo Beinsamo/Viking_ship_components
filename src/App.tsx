@@ -4,6 +4,7 @@ import Alert, {AlertType} from './components/Alert/alert';
 
 import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuitem'
+import SubMenu from './components/Menu/submenu'
 
 function App() {
   let [open,openAlert]=useState(false)
@@ -14,15 +15,22 @@ function App() {
        <Button size={ButtonSize.Large} btnType={ButtonType.Primary} onClick={()=>{openAlert(true)}}>nihao</Button>        
        <Alert idName='1' altType={AlertType.Success} title={'alertsucess'} content='it sucesses' />
 
-       <Menu defaultIndex={0}> 
-
-         <MenuItem index={0}>
+       <Menu mode={'vertical'} defaultIndex='0' onSelect={(index)=>{alert(index)}} defaultOpenMenu={['1']}> 
+         <MenuItem>
            link 1
          </MenuItem>
-         <MenuItem index={1}>
-           link 2
-         </MenuItem>
-         <MenuItem index={2}>
+         <SubMenu title='dropdown'>
+           <MenuItem>
+             dropdown1
+           </MenuItem>
+           <MenuItem>
+             dropdown2
+           </MenuItem>
+           <MenuItem>
+             dropdown3
+           </MenuItem>
+         </SubMenu>
+         <MenuItem>
            link 3
          </MenuItem>
        </Menu>

@@ -1,16 +1,17 @@
 import React from 'react';
-import {render,RenderResult, fireEvent, cleanup} from '@testing-library/react';
+import {render,RenderResult, fireEvent, cleanup, wait} from '@testing-library/react';
 import Menu,{MenuProps} from './menu';
-import MenuItem from './menuitem'
+import MenuItem from './menuitem';
+import SubMenu from './submenu'
 
 const testProps:MenuProps={
-    defaultIndex:0,
+    defaultIndex:'0',
     onSelect:jest.fn(),
     className:'test'
 }
 
 const testVerProps:MenuProps={
-    defaultIndex:0,
+    defaultIndex:'0',
     mode:'vertical',
     
 }
@@ -18,15 +19,20 @@ const testVerProps:MenuProps={
 const GerneralMenu=(props : MenuProps)=>{
    return(
     <Menu  {...props}> 
-    <MenuItem index={0}>
+    <MenuItem >
       active
     </MenuItem>
-    <MenuItem disabled index={1}>
+    <MenuItem disabled >
       disabled
     </MenuItem>
-    <MenuItem index={2}>
+    <MenuItem >
       xyz
     </MenuItem>
+    <SubMenu title='dropdown'>
+      <MenuItem>
+       drop1
+      </MenuItem>
+    </SubMenu>
   </Menu>
    )
 }
@@ -44,7 +50,7 @@ describe('test menu and menuItem component',()=>{
     it('should render correct Menu and MenuItem based on default props',()=>{
        expect(menuElement).toBeInTheDocument();
        expect(menuElement).toHaveClass('viking-menu test');
-       expect(menuElement.getElementsByTagName('li').length).toEqual(3);
+       expect(menuElement.querySelectorAll(':scope>li').length).toEqual(4)
        expect(activeElement).toHaveClass('menu-item is-active');
        expect(disabledElement).toHaveClass('menu-item is-disabled');
     });
@@ -53,7 +59,7 @@ describe('test menu and menuItem component',()=>{
        fireEvent.click(thirdItem);
        expect(thirdItem).toHaveClass('is-active');
        expect(activeElement).not.toHaveClass('is-actve');
-       expect(testProps.onSelect).toHaveBeenCalledWith(2);
+       expect(testProps.onSelect).toHaveBeenCalledWith('2');
        fireEvent.click(disabledElement);
        expect(disabledElement).not.toHaveClass('is-active');
        expect(testProps.onSelect).not.toHaveBeenNthCalledWith(1);
@@ -64,4 +70,18 @@ describe('test menu and menuItem component',()=>{
        const menuElement=wrapper.getByTestId('test-menu');
        expect(menuElement).toHaveClass('menu-vertical')
     });
+    it('should show dropdown items when hover on submenu',async()=>{
+       const submenuelement = wrapper.getByText('dropdown')
+       expect(submenuelement.outerHTML).toStrictEqual('<div class="submenu-title">dropdown</div>');
+       fireEvent.mouseEnter(submenuelement)
+       await wait(()=>{
+         expect(wrapper.queryByText('drop1')).toBeVisible()
+       })
+       fireEvent.click(wrapper.getByText('drop1'));
+       expect(testProps.onSelect).toHaveBeenCalledWith('3-0');
+       fireEvent.mouseLeave(submenuelement)
+       await wait(()=>{
+         expect(submenuelement.outerHTML).toEqual('<div class="submenu-title">dropdown</div>');
+       })
+    })
 })

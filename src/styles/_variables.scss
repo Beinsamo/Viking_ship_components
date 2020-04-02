@@ -291,3 +291,14 @@ $progress-bg:                       $gray-200 !default;
 $progress-border-radius:            $border-radius !default;
 $progress-bar-color:                $white !default;
 $progress-bar-transition:           width .6s ease !default;
+
+$theme-colors:(
+  'primary' :    $primary,
+  'secondary' :  $secondary,
+  'success' :     $success,
+  'info' :       $info,
+  'warning' :    $warning,
+  'danger' :     $danger,
+  'light' :      $light,
+  'dark'  :      $dark
+)
